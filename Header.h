@@ -117,6 +117,7 @@ bool isEmpty(LinkedList loket);
 */
 
 void MenuAkhir(Pelanggan *User, Film propertiFilm[], int pilihanUser);
+<<<<<<< HEAD
 /* Menampilkan menu akhir setelah seorang pelanggan selesai melakukan pembelian tiket */
 
 void initialisasiList(LinkedList list[]);
@@ -126,4 +127,7 @@ void initialisasiList(LinkedList list[]);
     FS:  Sudah terbentuk loket untuk menampung antrian 
 */
 
+=======
+void DeleteNodeQueue(LinkedList Loket[], int i);
+>>>>>>> 1e724e473706448e6e808fbc0e0e98e4fe38d8e8
 #endif
