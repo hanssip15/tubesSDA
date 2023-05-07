@@ -106,6 +106,7 @@ void insertPelanggan(LinkedList *Loket, Pelanggan input)
 void TambahAntrean(LinkedList Loket[], Pelanggan input)
 {
     bool FindLoket = false;
+    int arg;
     // Memeriksa apakah ada loket kosong, jika iya, insert ke dalam loket tersebut
     for (int i = 0; i < jumlahLoket; i++)
     {
@@ -113,6 +114,7 @@ void TambahAntrean(LinkedList Loket[], Pelanggan input)
         {
             insertPelanggan(&Loket[i], input);
             FindLoket = true;
+            arg = i;
         }
     }
 
@@ -125,26 +127,27 @@ void TambahAntrean(LinkedList Loket[], Pelanggan input)
             if (convertTMtosecond(Loket[i].rear->waktuEstimasi) < convertTMtosecond((*LoketRekomendasi).rear->waktuEstimasi))
             {
                 LoketRekomendasi = &Loket[i];
+                arg = i;
             }
         }
         insertPelanggan(LoketRekomendasi, input);
     }
 
     //Delete Queue
-    DeleteNodeQueue(Loket[], i);
+    DeleteNodeQueue(Loket[arg]);
 }
 
-void DeleteNodeQueue(LinkedList Loket[], int i)
+void DeleteNodeQueue(LinkedList Loket)
 {
     struct tm *local;
     time_t t = time(Nil);
     local = localtime(&t);
 
-    if(Loket[i].front != Nil && Loket[i].front->waktuEstimasi.tm_hour >= local->tm_hour && Loket[i].front->waktuEstimasi.tm_min >= local->tm_min && Loket[i].front->waktuEstimasi.tm_sec >= local->tm_sec)
+    if(Loket.front != Nil && Loket.front->waktuEstimasi.tm_hour >= local->tm_hour && Loket.front->waktuEstimasi.tm_min >= local->tm_min && Loket.front->waktuEstimasi.tm_sec >= local->tm_sec)
     {
-        address temp = Loket[i].front;
-        Loket[i].front = Loket[i].front->next;
-        Loket[i].front->prev = Nil;
+        address temp = Loket.front;
+        Loket.front = Loket.front->next;
+        Loket.front->prev = Nil;
         free(temp);
     }
 }
