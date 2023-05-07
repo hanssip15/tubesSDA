@@ -128,6 +128,6 @@ void initialisasiList(LinkedList list[]);
 */
 
 =======
-void DeleteNodeQueue(LinkedList Loket[], int i);
+void DeleteNodeQueue(LinkedList Loket);
 >>>>>>> 1e724e473706448e6e808fbc0e0e98e4fe38d8e8
 #endif
