@@ -287,7 +287,7 @@ void createPropertiFilm(Film propertiFilm[], int index, info Judul, int ruang, i
 
 void tampilAntreanLoket(LinkedList List[])
 {
-    for (size_t i = 0; i < jumlahLoket; i++)
+    for (int i = 0; i < jumlahLoket; i++)
     {
         printf("Loket %d :\n-> ", i + 1);
         if (!isEmpty(List[i]))
