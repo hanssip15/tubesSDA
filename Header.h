@@ -85,4 +85,5 @@ int bangkuTersedia(Film Bangku[], int pilihanUser);
 address Alokasi(info NamaPelanggan, int jmlTiket, struct tm waktuDatang, struct tm waktuEstimasi);
 bool isEmpty(LinkedList loket);
 void MenuAkhir(Pelanggan *User, Film propertiFilm[], int pilihanUser);
+void DeleteNodeQueue(LinkedList Loket[], int i);
 #endif
