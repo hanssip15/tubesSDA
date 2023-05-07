@@ -34,14 +34,5 @@ int main()
         MenuAkhir(&User,propertiFilm,pilihanUser);
         TambahAntrean(Loket, User);
     }
-    // print("%d", propertiFilm[0].waktuTayang.)
-
-    // printf("%s", propertiFilm[0].judul);
-
-    // createPropertiFilm(propertiFilm);
-    // CreateList(&Ruangan);
-    // // printf("%s", User.namaPelanggan);
-    // printf("%s", *User->namaPelanggan);
-
     return 0;
 }
