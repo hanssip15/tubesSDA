@@ -47,7 +47,15 @@ typedef struct tPelanggan
     address prev;
 }Pelanggan;
 
+// typedef struct
+// {
+//     int rows, columns;
+// } table;
+
 /* Modul Program */
+// table ReadResolution();
+// void printc(char Pesan[]);
+// void CenterVertical(int line);
 void CreatePelanggan(Pelanggan *User, int countPelanggan);
 /* Membentuk sebuah node untuk diisi data seorang pelanggan */
 /*
@@ -117,17 +125,19 @@ bool isEmpty(LinkedList loket);
 */
 
 void MenuAkhir(Pelanggan *User, Film propertiFilm[], int pilihanUser);
-<<<<<<< HEAD
 /* Menampilkan menu akhir setelah seorang pelanggan selesai melakukan pembelian tiket */
 
 void initialisasiList(LinkedList list[]);
 /* Membentuk / Menginisialisasi sebuah linked list yang nanti nya akan dipergunakan sebagai loket yang menampung antrian */
 /*
     IS: Belum terbentuk sebuah list untuk menampung antrian (Loket) 
-    FS:  Sudah terbentuk loket untuk menampung antrian 
+    FS: Sudah terbentuk loket untuk menampung antrian 
 */
 
-=======
-void DeleteNodeQueue(LinkedList Loket[], int i);
->>>>>>> 1e724e473706448e6e808fbc0e0e98e4fe38d8e8
+void DeleteNodeQueue(LinkedList Loket);
+/* Menghapus node Pelanggan dalam Queue setelah melewati waktu tertentu*/
+/*
+    IS: Node pelanggan pada Queue yang ditunjuk head belum dihapus
+    FS: Node pelanggan pada Queue yang ditunjuk head dihapus, dan digantikan node setelahnya
+*/
 #endif

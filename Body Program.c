@@ -3,7 +3,39 @@
 #include "Header.h"
 
 /* Body Program */
+// table ReadResolution()
+// {
+//     table Result;
 
+//     CONSOLE_SCREEN_BUFFER_INFO csbi;
+//     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+//     Result.columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+//     Result.rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+//     return Result;
+// }
+// void printc(char Pesan[])
+// {
+//     int columns = ReadResolution().columns;
+//     if (((columns - strlen(Pesan)) / 2) > 1)
+//     {
+//         for (size_t i = 0; i < ((columns - strlen(Pesan)) / 2); i++)
+//         {
+//             printf(" ");
+//         }
+//     }
+//     // ^ Printf spasi sebanyak yang dibutuhkan teks agar memiliki posisi tengah
+
+//     printf("%s", Pesan);
+//     // ^ Print pesan yang ingin diletakan di tengah layar
+// }
+// void CenterVertical(int line)
+// {
+//     for (size_t i = 0; i < ((ReadResolution().rows / 2) - line); i++)
+//     {
+//         printf("\n");
+//     }
+// }
 address Alokasi(info NamaPelanggan, int jmlTiket, struct tm waktuDatang, struct tm waktuEstimasi)
 {
     address P;
@@ -53,9 +85,7 @@ void CreateList(LinkedList *X)
 }
 bool isEmpty(LinkedList loket)
 {
-    if (loket.front == NULL)
-        return true;
-    return false;
+    return (loket.front == NULL);
 }
 struct tm convertSecondsToTime(long seconds)
 {
@@ -106,6 +136,7 @@ void insertPelanggan(LinkedList *Loket, Pelanggan input)
 void TambahAntrean(LinkedList Loket[], Pelanggan input)
 {
     bool FindLoket = false;
+    int arg;
     // Memeriksa apakah ada loket kosong, jika iya, insert ke dalam loket tersebut
     for (int i = 0; i < jumlahLoket; i++)
     {
@@ -113,6 +144,7 @@ void TambahAntrean(LinkedList Loket[], Pelanggan input)
         {
             insertPelanggan(&Loket[i], input);
             FindLoket = true;
+            arg = i;
         }
     }
 
@@ -125,32 +157,34 @@ void TambahAntrean(LinkedList Loket[], Pelanggan input)
             if (convertTMtosecond(Loket[i].rear->waktuEstimasi) < convertTMtosecond((*LoketRekomendasi).rear->waktuEstimasi))
             {
                 LoketRekomendasi = &Loket[i];
+                arg = i;
             }
         }
         insertPelanggan(LoketRekomendasi, input);
     }
 
     //Delete Queue
-    DeleteNodeQueue(Loket[], i);
+    DeleteNodeQueue(Loket[arg]);
 }
 
-void DeleteNodeQueue(LinkedList Loket[], int i)
+void DeleteNodeQueue(LinkedList Loket)
 {
     struct tm *local;
     time_t t = time(Nil);
     local = localtime(&t);
 
-    if(Loket[i].front != Nil && Loket[i].front->waktuEstimasi.tm_hour >= local->tm_hour && Loket[i].front->waktuEstimasi.tm_min >= local->tm_min && Loket[i].front->waktuEstimasi.tm_sec >= local->tm_sec)
+    if(Loket.front != Nil && Loket.front->waktuEstimasi.tm_hour >= local->tm_hour && Loket.front->waktuEstimasi.tm_min >= local->tm_min && Loket.front->waktuEstimasi.tm_sec >= local->tm_sec)
     {
-        address temp = Loket[i].front;
-        Loket[i].front = Loket[i].front->next;
-        Loket[i].front->prev = Nil;
+        address temp = Loket.front;
+        Loket.front = Loket.front->next;
+        Loket.front->prev = Nil;
         free(temp);
     }
 }
 
 void HeaderCGV()
 {
+    system("cls");
     printf("============================================================\n");
     printf(" .----------------.  .----------------.  .----------------. \n");
     printf("| .--------------. || .--------------. || .--------------. |\n");
@@ -253,14 +287,6 @@ void MainMenu(Pelanggan *User, int countPelanggan)
     printf("Silahkan masukan nama anda: \n");
     CreatePelanggan(User, countPelanggan);
 }
-// void createPropertiFilm(Film *propertiFilm) {
-//     int i;
-//     for (i=0; i<3; i++) {
-//         propertiFilm[i].judul = "Cinta Sejati";
-//         propertiFilm[i].ruang = 23;
-//         propertiFilm[i].waktuTayang = 10.00;
-//     }
-// }
 
 void createPropertiFilm(Film propertiFilm[], int index, info Judul, int ruang, int jam, int menit, int detik)
 {
