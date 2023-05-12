@@ -141,10 +141,7 @@ void DeleteNodeQueue(LinkedList Loket);
     IS: Node pelanggan pada Queue yang ditunjuk head belum dihapus
     FS: Node pelanggan pada Queue yang ditunjuk head dihapus, dan digantikan node setelahnya
 */
-#endif
-=======
-=======
+
 void DeleteNodeQueue(LinkedList Loket);
->>>>>>> 1e724e473706448e6e808fbc0e0e98e4fe38d8e8
+
 #endif
->>>>>>> 17e754cab58621f3029a7c678fad0fafccc3b0b0
