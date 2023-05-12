@@ -134,7 +134,6 @@ void initialisasiList(LinkedList list[]);
     FS: Sudah terbentuk loket untuk menampung antrian 
 */
 
-<<<<<<< HEAD
 void DeleteNodeQueue(LinkedList Loket);
 /* Menghapus node Pelanggan dalam Queue setelah melewati waktu tertentu*/
 /*
