@@ -47,15 +47,15 @@ typedef struct tPelanggan
     address prev;
 }Pelanggan;
 
-// typedef struct
-// {
-//     int rows, columns;
-// } table;
+typedef struct
+{
+    int rows, columns;
+} table;
 
 /* Modul Program */
-// table ReadResolution();
-// void printc(char Pesan[]);
-// void CenterVertical(int line);
+table ReadResolution();
+void printc(char Pesan[]);
+void CenterVertical(int line);
 void CreatePelanggan(Pelanggan *User, int countPelanggan);
 /* Membentuk sebuah node untuk diisi data seorang pelanggan */
 /*
@@ -134,7 +134,6 @@ void initialisasiList(LinkedList list[]);
     FS: Sudah terbentuk loket untuk menampung antrian 
 */
 
-<<<<<<< HEAD
 void DeleteNodeQueue(LinkedList Loket);
 /* Menghapus node Pelanggan dalam Queue setelah melewati waktu tertentu*/
 /*

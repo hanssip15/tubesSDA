@@ -3,39 +3,40 @@
 #include "Header.h"
 
 /* Body Program */
-// table ReadResolution()
-// {
-//     table Result;
+table ReadResolution()
+{
+    table Result;
 
-//     CONSOLE_SCREEN_BUFFER_INFO csbi;
-//     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-//     Result.columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-//     Result.rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    Result.columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    Result.rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
-//     return Result;
-// }
-// void printc(char Pesan[])
-// {
-//     int columns = ReadResolution().columns;
-//     if (((columns - strlen(Pesan)) / 2) > 1)
-//     {
-//         for (size_t i = 0; i < ((columns - strlen(Pesan)) / 2); i++)
-//         {
-//             printf(" ");
-//         }
-//     }
-//     // ^ Printf spasi sebanyak yang dibutuhkan teks agar memiliki posisi tengah
+    return Result;
+}
+void printc(char Pesan[])
+{
+    int columns = ReadResolution().columns;
+    if (((columns - strlen(Pesan)) / 2) > 1)
+    {
+        for (size_t i = 0; i < ((columns - strlen(Pesan)) / 2); i++)
+        {
+            printf(" ");
+        }
+    }
+    // ^ Printf spasi sebanyak yang dibutuhkan teks agar memiliki posisi tengah
 
-//     printf("%s", Pesan);
-//     // ^ Print pesan yang ingin diletakan di tengah layar
-// }
-// void CenterVertical(int line)
-// {
-//     for (size_t i = 0; i < ((ReadResolution().rows / 2) - line); i++)
-//     {
-//         printf("\n");
-//     }
-// }
+    printf("%s", Pesan);
+    // ^ Print pesan yang ingin diletakan di tengah layar
+}
+void CenterVertical(int line)
+{
+    for (size_t i = 0; i < ((ReadResolution().rows / 2) - line); i++)
+    {
+        printf("\n");
+    }
+}
+
 address Alokasi(info NamaPelanggan, int jmlTiket, struct tm waktuDatang, struct tm waktuEstimasi)
 {
     address P;
@@ -185,19 +186,20 @@ void DeleteNodeQueue(LinkedList Loket)
 void HeaderCGV()
 {
     system("cls");
-    printf("============================================================\n");
-    printf(" .----------------.  .----------------.  .----------------. \n");
-    printf("| .--------------. || .--------------. || .--------------. |\n");
-    printf("| |     ______   | || |    ______    | || | ____   ____  | |\n");
-    printf("| |   .' ___  |  | || |  .' ___  |   | || ||_  _| |_  _| | |\n");
-    printf("| |  / .'   \\_|  | || | / .'   \\_|   | || |  \\ \\   / /   | |\n");
-    printf("| |  | |         | || | | |    ____  | || |   \\ \\ / /    | |\n");
-    printf("| |  \\ `.___.'\\  | || | \\ `.___]  _| | || |    \\ ' /     | |\n");
-    printf("| |   `._____.'  | || |  `._____.'   | || |     \\_/      | |\n");
-    printf("| |              | || |              | || |              | |\n");
-    printf("| '--------------' || '--------------' || '--------------' |\n");
-    printf(" '----------------'  '----------------'  '----------------' \n");
-    printf("============================================================\n");
+    printc("============================================================\n");
+    printc(" .----------------.  .----------------.  .----------------. \n");
+    printc("| .--------------. || .--------------. || .--------------. |\n");
+    printc("| |     ______   | || |    ______    | || | ____   ____  | |\n");
+    printc("| |   .' ___  |  | || |  .' ___  |   | || ||_  _| |_  _| | |\n");
+    printc("| |  / .'   \\_|  | || | / .'   \\_|   | || |  \\ \\   / /   | |\n");
+    printc("| |  | |         | || | | |    ____  | || |   \\ \\ / /    | |\n");
+    printc("| |  \\ `.___.'\\  | || | \\ `.___]  _| | || |    \\ ' /     | |\n");
+    printc("| |   `._____.'  | || |  `._____.'   | || |     \\_/      | |\n");
+    printc("| |              | || |              | || |              | |\n");
+    printc("| '--------------' || '--------------' || '--------------' |\n");
+    printc(" '----------------'  '----------------'  '----------------' \n");
+    printc("============================================================\n");
+    printf("\ntest1");
 }
 void SecondMenu(Pelanggan *User, Film propertiFilm[], LinkedList Loket[], int *pilihanUser, int *jmlhTiket)
 {
@@ -283,8 +285,8 @@ void ThirdMenu(int pilihanUser, Film *propertiFilm, int jmlhTiket)
 void MainMenu(Pelanggan *User, int countPelanggan)
 {
     HeaderCGV();
-    printf("Selamat datang di bioskop CGV\n");
-    printf("Silahkan masukan nama anda: \n");
+    printc("Selamat datang di bioskop CGV\n");
+    printc("Silahkan masukan nama anda: ");
     CreatePelanggan(User, countPelanggan);
 }
 
