@@ -56,6 +56,8 @@ typedef struct
 table ReadResolution();
 void printc(char Pesan[]);
 void CenterVertical(int line);
+void printn(char Pesan[]);
+
 void CreatePelanggan(Pelanggan *User, int countPelanggan);
 /* Membentuk sebuah node untuk diisi data seorang pelanggan */
 /*

@@ -29,6 +29,17 @@ void printc(char Pesan[])
     printf("%s", Pesan);
     // ^ Print pesan yang ingin diletakan di tengah layar
 }
+
+void printn(char Pesan[])
+{
+    int columns = ReadResolution().columns/2;
+    for (size_t i = 0; i < ((columns - strlen(Pesan)) / 2 + 1); i++)
+    {
+        printf(" ");
+    }
+    printf("%s", Pesan);
+}
+
 void CenterVertical(int line)
 {
     for (size_t i = 0; i < ((ReadResolution().rows / 2) - line); i++)
@@ -199,7 +210,6 @@ void HeaderCGV()
     printc("| '--------------' || '--------------' || '--------------' |\n");
     printc(" '----------------'  '----------------'  '----------------' \n");
     printc("============================================================\n");
-    printf("\ntest1");
 }
 void SecondMenu(Pelanggan *User, Film propertiFilm[], LinkedList Loket[], int *pilihanUser, int *jmlhTiket)
 {
