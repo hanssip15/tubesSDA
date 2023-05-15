@@ -184,7 +184,7 @@ void TambahAntrean(LinkedList Loket[], Pelanggan input)
     }
 
     //Delete Queue
-    //DeleteNodeQueue(Loket[arg]);
+    //DeleteNodeQueue(Loket[arg]); minimal bisa jalan bentar
 }
 
 void DeleteNodeQueue(LinkedList Loket)
@@ -316,27 +316,24 @@ void MainMenu(Pelanggan *User, int countPelanggan)
     CreatePelanggan(User, countPelanggan);
 }
 
-void createPropertiFilm(Film propertiFilm[], int index, info Judul, int ruang, int jam, int menit, int detik)
+void createPropertiFilm(Film propertiFilm[], int index, const char* judul, int studio, int jam, int menit, int detik)
 {
-    int i, j;
-    propertiFilm[index].judul = Judul;
-    propertiFilm[index].ruang = ruang;
+    time_t now = time(NULL);
+    struct tm* currentTime = localtime(&now);
+    int currentHour = currentTime->tm_hour;
 
-    struct tm tm_time = {0}; // Inisialisasi struktur tm dengan 0
-
-    // Mengisi komponen waktu dalam struktur tm
-    tm_time.tm_hour = jam;
-    tm_time.tm_min = menit;
-    tm_time.tm_sec = detik;
-
-    propertiFilm[index].waktuTayang = tm_time;
-    for (i = 0; i < jumlahFilm; i++)
+    if (currentHour > jam)
     {
-        for (j = 0; j < 32; j++)
-        {
-            propertiFilm[i].listBangku[j] = FALSE;
-        }
+        printf("Film '%s' sudah tidak tersedia.\n", judul);
+        return;
     }
+
+    propertiFilm[index].idFilm = index;
+    strcpy(propertiFilm[index].judulFilm, judul);
+    propertiFilm[index].studio = studio;
+    propertiFilm[index].jamTayang.tm_hour = jam;
+    propertiFilm[index].jamTayang.tm_min = menit;
+    propertiFilm[index].jamTayang.tm_sec = detik;
 }
 
 void tampilAntreanLoket(LinkedList List[])
