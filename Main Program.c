@@ -10,6 +10,8 @@ int main()
     Film propertiFilm[jumlahFilm];
     int pilihanUser, jmlhTiket;
 
+    char anchor = 'Y';
+
     int countPelanggan = 0;
 
     // INITIALISASI
@@ -26,13 +28,14 @@ int main()
     initialisasiList(Loket);
     // INITIALISASI
 
-    while (true)
+    while (anchor == 'Y' || anchor == 'y')
     {
         MainMenu(&User, countPelanggan);
         SecondMenu(&User, propertiFilm, Loket, &pilihanUser, &jmlhTiket);
         ThirdMenu(pilihanUser, propertiFilm, jmlhTiket);
         MenuAkhir(&User,propertiFilm,pilihanUser);
         TambahAntrean(Loket, User);
+        Konfirmasi(anchor);
     }
     return 0;
 }

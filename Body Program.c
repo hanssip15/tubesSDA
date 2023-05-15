@@ -184,20 +184,28 @@ void TambahAntrean(LinkedList Loket[], Pelanggan input)
     }
 
     //Delete Queue
-    DeleteNodeQueue(Loket[arg]);
+    //DeleteNodeQueue(Loket[arg]);
 }
 
 void DeleteNodeQueue(LinkedList Loket)
 {
     struct tm *local;
-    time_t t = time(Nil);
+    time_t t = time(NULL);
     local = localtime(&t);
 
-    if(Loket.front != Nil && Loket.front->waktuEstimasi.tm_hour >= local->tm_hour && Loket.front->waktuEstimasi.tm_min >= local->tm_min && Loket.front->waktuEstimasi.tm_sec >= local->tm_sec)
-    {
-        address temp = Loket.front;
-        Loket.front = Loket.front->next;
-        Loket.front->prev = Nil;
+    if (Loket->front != NULL && (Loket->front->waktuEstimasi.tm_hour > local->tm_hour ||
+        (Loket->front->waktuEstimasi.tm_hour == local->tm_hour &&Loket->front->waktuEstimasi.tm_min > local->tm_min) ||
+        (Loket->front->waktuEstimasi.tm_hour == local->tm_hour &&Loket->front->waktuEstimasi.tm_min == local->tm_min &&Loket->front->waktuEstimasi.tm_sec >= local->tm_sec))) {
+
+        address temp = Loket->front;
+        Loket->front = Loket->front->next;
+
+        if (Loket->front != NULL) {
+            Loket->front->prev = NULL;
+        } else {
+            Loket->rear = NULL;
+        }
+
         free(temp);
     }
 }
@@ -365,10 +373,18 @@ void MenuAkhir(Pelanggan *User,Film propertiFilm[],int pilihanUser) {
     prints(" ");printf("Berikut Merupakan Detail dari Pesanan Anda: \n");
     prints(" ");printf("%s Memesan %d Tiket Film %s di Ruangan %d dengan Jadwal Tayang %d : %d : %d\n", (*User).namaPelanggan , (*User).TiketDipesan, propertiFilm[pilihanUser-1].judul,propertiFilm[pilihanUser].ruang,propertiFilm[pilihanUser-1].waktuTayang.tm_hour,propertiFilm[pilihanUser-1].waktuTayang.tm_min,propertiFilm[pilihanUser-1].waktuTayang.tm_sec);
     startPenilaian:
-    prints(" ");printf("\nSilahkan Beri Penilaian Untuk Kami (1-5): ");
+    prints(" ");printf("Silahkan Beri Penilaian Untuk Kami (1-5): ");
     scanf("%d",&penilaianPelanggan);
     if(penilaianPelanggan < 1 || penilaianPelanggan > 5) {
         prints(" ");printf("Input Invalid Tolong Input dengan Benar!\n");
         goto startPenilaian;
-    }   
+    }
+}
+
+void Konfirmasi(char Anchor){
+    HeaderCGV();
+    printc("Apakah ingin lanjut memesan?\n");
+    printc("(Y/N)\n");
+    scanf("%c",&Anchor);
+    return Anchor;
 }

@@ -146,4 +146,5 @@ void DeleteNodeQueue(LinkedList Loket);
 
 void DeleteNodeQueue(LinkedList Loket);
 
+void Konfirmasi(char Anchor);
 #endif
