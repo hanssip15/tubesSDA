@@ -231,16 +231,21 @@ void HeaderCGV()
 void SecondMenu(Pelanggan *User, Film propertiFilm[], LinkedList Loket[], int *pilihanUser, int *jmlhTiket)
 {
     int cekBangku = 0;
+    bool verifPilihan[9];
+    for(int i = 0; i < 9; i++) {
+        verifPilihan[i] = TRUE;
+    }
     HeaderCGV();
     prints(" ");printf("Selamat Datang di Bioskop CGV Tuan/Nyonya %s \n", (*User).namaPelanggan);
     prints(" ");waktu();
+    startUlangVerif:
     prints(" ");printf("__________________________________________________________\n");
-    prints(" ");printf("| %-5s | %-20s | %-10s | %-10s |\n", "No", "Judul", "Ruangan", "Jam Tayang");
+    prints(" ");printf("| %-5s | %-20s | %-10s | %-10s |\n", "No", "Judul", "Studio", "Jam Tayang");
     prints(" ");printf("__________________________________________________________\n");
     for (int i = 0; i < 9; i++)
     {
 
-time_t rawtime;
+    time_t rawtime;
     struct tm* info;
 
     time(&rawtime);
@@ -250,13 +255,23 @@ time_t rawtime;
             if(cekBangku = bangkuTersedia(propertiFilm, i+1) != 0) {
             prints(" ");printf("| %-5d | %-20s | %-10d | %d : %d : %d |\n", i + 1, propertiFilm[i].judul, propertiFilm[i].ruang, propertiFilm[i].waktuTayang.tm_hour, propertiFilm[i].waktuTayang.tm_min, propertiFilm[i].waktuTayang.tm_sec);
         } else {
-            prints(" ");printf("| %-5d | Film %s Sudah Habis Tiketnya!! |\n", i + 1, propertiFilm[i].judul);
+            prints(" ");printf("| %-5d | Film %-15s | Pada Jam %d : %d : %d Sudah Habis Tiketnya !! \n", i + 1, propertiFilm[i].judul, propertiFilm[i].waktuTayang.tm_hour, propertiFilm[i].waktuTayang.tm_min, propertiFilm[i].waktuTayang.tm_sec);
+            verifPilihan[i] = FALSE;
         }
+        }
+        else {
+            prints(" ");printf("| %-5d | Film %-15s | Pada Jam %d : %d : %d Tidak Tersedia !! \n", i + 1, propertiFilm[i].judul, propertiFilm[i].waktuTayang.tm_hour, propertiFilm[i].waktuTayang.tm_min, propertiFilm[i].waktuTayang.tm_sec);
+            verifPilihan[i] = FALSE;
         }
     }
     prints(" ");printf("__________________________________________________________\n");
     prints(" ");printf("Silahkan Input Pilihan Anda: ");
     scanf("%d", pilihanUser);
+    if(verifPilihan[*pilihanUser-1] == FALSE) {
+        system("cls");
+        printc("Pilihan tidak dapat dipilih, silahkan pilih ulang!\n");
+        goto startUlangVerif;
+    }
 startJumlahTiket:
     prints(" ");printf("Jumlah Tiket yang dipesan: ");
     scanf("%d", jmlhTiket);
@@ -279,6 +294,9 @@ void ThirdMenu(int pilihanUser, Film *propertiFilm, int jmlhTiket)
         prints(" ");printf(" %-5s: %d\n", "Ruangan", propertiFilm[pilihanUser - 1].ruang);
         prints(" ");printf(" %-5s: %d : %d : %d\n", "Jam Tayang", propertiFilm[pilihanUser - 1].waktuTayang.tm_hour, propertiFilm[pilihanUser - 1].waktuTayang.tm_min, propertiFilm[pilihanUser - 1].waktuTayang.tm_sec);
         prints(" ");printf("Kursi yang Tersedia\n");
+        prints(" ");printf("x adalah bangku yang terisi\n");
+        prints(" ");printf("o adalah bangku yang belum terisi\n");
+
         for (i = 0; i < 32; i++)
         {
             char pesan[2];
