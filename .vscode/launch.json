@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/POLBAN/Semester 2/Struktur Data dan Algrotima/Praktik/C/tubes/tubesSDA",
-      "program": "d:/POLBAN/Semester 2/Struktur Data dan Algrotima/Praktik/C/tubes/tubesSDA/build/Debug/outDebug",
+      "cwd": "e:/Kuliah/Kuliah Semester 2/Struktur Data dan Algoritma (PR)/UAS REV",
+      "program": "e:/Kuliah/Kuliah Semester 2/Struktur Data dan Algoritma (PR)/UAS REV/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

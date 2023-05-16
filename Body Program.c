@@ -14,7 +14,7 @@ table ReadResolution()
 
     return Result;
 }
-void printc(char Pesan[])
+void printc(char Pesan[]) // 1/2
 {
     int columns = ReadResolution().columns;
     if (((columns - strlen(Pesan)) / 2) > 1)
@@ -30,7 +30,7 @@ void printc(char Pesan[])
     // ^ Print pesan yang ingin diletakan di tengah layar
 }
 
-void printn(char Pesan[])
+void printn(char Pesan[]) // 1/4 layar
 {
     int columns = ReadResolution().columns/2;
     for (size_t i = 0; i < ((columns - strlen(Pesan)) / 2 + 1); i++)
@@ -184,36 +184,37 @@ void TambahAntrean(LinkedList Loket[], Pelanggan input)
     }
 
     //Delete Queue
-    //DeleteNodeQueue(Loket[arg]); minimal bisa jalan bentar
+    DeleteNodeQueue(Loket);
 }
 
-void DeleteNodeQueue(LinkedList Loket)
+void DeleteNodeQueue(LinkedList Loket[])
 {
     struct tm *local;
     time_t t = time(NULL);
     local = localtime(&t);
+    for (int i = 0; i < 3; i++)
+    {
+        if (Loket[i].front != NULL && (Loket[i].front->waktuEstimasi.tm_hour < local->tm_hour ||(Loket[i].front->waktuEstimasi.tm_hour == local->tm_hour && Loket[i].front->waktuEstimasi.tm_min <= local->tm_min) ||
+        (Loket[i].front->waktuEstimasi.tm_hour == local->tm_hour && Loket[i].front->waktuEstimasi.tm_min == local->tm_min && Loket[i].front->waktuEstimasi.tm_sec <= local->tm_sec))) {
 
-    if (Loket->front != NULL && (Loket->front->waktuEstimasi.tm_hour > local->tm_hour ||
-        (Loket->front->waktuEstimasi.tm_hour == local->tm_hour &&Loket->front->waktuEstimasi.tm_min > local->tm_min) ||
-        (Loket->front->waktuEstimasi.tm_hour == local->tm_hour &&Loket->front->waktuEstimasi.tm_min == local->tm_min &&Loket->front->waktuEstimasi.tm_sec >= local->tm_sec))) {
+            address temp = Loket[i].front;
+            Loket[i].front = Loket[i].front->next;
 
-        address temp = Loket->front;
-        Loket->front = Loket->front->next;
+            if (Loket[i].front != NULL) {
+                Loket[i].front->prev = NULL;
+            } else {
+                Loket[i].rear = NULL;
+            }
 
-        if (Loket->front != NULL) {
-            Loket->front->prev = NULL;
-        } else {
-            Loket->rear = NULL;
+            free(temp);
         }
-
-        free(temp);
     }
 }
 
 void HeaderCGV()
 {
     system("cls");
-    printc("============================================================\n");
+    printc("==========================================================================================================================\n");
     printc(" .----------------.  .----------------.  .----------------. \n");
     printc("| .--------------. || .--------------. || .--------------. |\n");
     printc("| |     ______   | || |    ______    | || | ____   ____  | |\n");
@@ -225,27 +226,32 @@ void HeaderCGV()
     printc("| |              | || |              | || |              | |\n");
     printc("| '--------------' || '--------------' || '--------------' |\n");
     printc(" '----------------'  '----------------'  '----------------' \n");
-    printc("============================================================\n");
+    printc("==========================================================================================================================\n");
 }
 void SecondMenu(Pelanggan *User, Film propertiFilm[], LinkedList Loket[], int *pilihanUser, int *jmlhTiket)
 {
     int cekBangku = 0;
-    time_t t = time(NULL);
-    struct tm *local_time = localtime(&t);
     HeaderCGV();
     prints(" ");printf("Selamat Datang di Bioskop CGV Tuan/Nyonya %s \n", (*User).namaPelanggan);
-    prints(" ");printf("Antrian Saat Ini: (Nama) (Jumlah Tiket) (Estimasi Selesai)\n");
-    tampilAntreanLoket(Loket);
-    prints(" ");printf("Berikut Daftar Film yang Tersedia Pada Hari %s", asctime(local_time));
+    prints(" ");waktu();
     prints(" ");printf("__________________________________________________________\n");
     prints(" ");printf("| %-5s | %-20s | %-10s | %-10s |\n", "No", "Judul", "Ruangan", "Jam Tayang");
     prints(" ");printf("__________________________________________________________\n");
     for (int i = 0; i < 9; i++)
     {
-        if(cekBangku = bangkuTersedia(propertiFilm, i+1) != 0) {
+
+time_t rawtime;
+    struct tm* info;
+
+    time(&rawtime);
+    info = localtime(&rawtime);
+
+        if(convertTMtosecond(propertiFilm[i].waktuTayang) >= convertTMtosecond(*info)){
+            if(cekBangku = bangkuTersedia(propertiFilm, i+1) != 0) {
             prints(" ");printf("| %-5d | %-20s | %-10d | %d : %d : %d |\n", i + 1, propertiFilm[i].judul, propertiFilm[i].ruang, propertiFilm[i].waktuTayang.tm_hour, propertiFilm[i].waktuTayang.tm_min, propertiFilm[i].waktuTayang.tm_sec);
         } else {
             prints(" ");printf("| %-5d | Film %s Sudah Habis Tiketnya!! |\n", i + 1, propertiFilm[i].judul);
+        }
         }
     }
     prints(" ");printf("__________________________________________________________\n");
@@ -316,38 +322,45 @@ void MainMenu(Pelanggan *User, int countPelanggan)
     CreatePelanggan(User, countPelanggan);
 }
 
-void createPropertiFilm(Film propertiFilm[], int index, const char* judul, int studio, int jam, int menit, int detik)
+void createPropertiFilm(Film propertiFilm[], int index, info Judul, int ruang, int jam, int menit, int detik)
 {
-    time_t now = time(NULL);
-    struct tm* currentTime = localtime(&now);
-    int currentHour = currentTime->tm_hour;
+    // if(){
+    //    ; 
+    // }
+    int i, j;
+    propertiFilm[index].judul = Judul;
+    propertiFilm[index].ruang = ruang;
 
-    if (currentHour > jam)
+    struct tm tm_time = {0}; // Inisialisasi struktur tm dengan 0
+
+    // Mengisi komponen waktu dalam struktur tm
+    tm_time.tm_hour = jam;
+    tm_time.tm_min = menit;
+    tm_time.tm_sec = detik;
+
+    propertiFilm[index].waktuTayang = tm_time;
+    for (i = 0; i < jumlahFilm; i++)
     {
-        printf("Film '%s' sudah tidak tersedia.\n", judul);
-        return;
+        for (j = 0; j < 32; j++)
+        {
+            propertiFilm[i].listBangku[j] = FALSE;
+        }
     }
-
-    propertiFilm[index].idFilm = index;
-    strcpy(propertiFilm[index].judulFilm, judul);
-    propertiFilm[index].studio = studio;
-    propertiFilm[index].jamTayang.tm_hour = jam;
-    propertiFilm[index].jamTayang.tm_min = menit;
-    propertiFilm[index].jamTayang.tm_sec = detik;
 }
 
 void tampilAntreanLoket(LinkedList List[])
 {
+    prints(" ");printf("Antrean Saat Ini: (Nama) (Jumlah Tiket) (Estimasi Selesai)\n");
     for (int i = 0; i < jumlahLoket; i++)
     {
-        prints(" ");printf("Loket %d : ", i + 1);
-        prints(" ");printf("\n->");
+        prints(" ");printf("Loket %d : \n", i + 1);
+        prints(" ");printf("->");
         if (!isEmpty(List[i]))
         {
             address travelsal = List[i].front;
             while (travelsal != NULL)
             {
-                prints(" ");printf("%s (%d)(%d:%d:%d), ", travelsal->namaPelanggan, travelsal->TiketDipesan, travelsal->waktuEstimasi.tm_hour, travelsal->waktuEstimasi.tm_min, travelsal->waktuEstimasi.tm_sec);
+                printf(" %s (%d)(%d:%d:%d), ", travelsal->namaPelanggan, travelsal->TiketDipesan, travelsal->waktuEstimasi.tm_hour, travelsal->waktuEstimasi.tm_min, travelsal->waktuEstimasi.tm_sec);
                 travelsal = travelsal->next;
             }
         }
@@ -378,10 +391,17 @@ void MenuAkhir(Pelanggan *User,Film propertiFilm[],int pilihanUser) {
     }
 }
 
-void Konfirmasi(char Anchor){
+void Konfirmasi(char *Anchor){
     HeaderCGV();
     printc("Apakah ingin lanjut memesan?\n");
-    printc("(Y/N)\n");
-    scanf("%c",&Anchor);
-    return Anchor;
+    printc("(Y/N) : ");
+    scanf("\n%c",Anchor);
+}
+
+void KondisiQueue(LinkedList Loket[]){
+    HeaderCGV();
+    printc("Kondisi Queue saat ini\n");
+    tampilAntreanLoket(Loket);
+    printc("Tekan apa saja untuk melanjutkan");
+    getch();
 }

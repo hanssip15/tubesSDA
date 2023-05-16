@@ -32,10 +32,11 @@ int main()
     {
         MainMenu(&User, countPelanggan);
         SecondMenu(&User, propertiFilm, Loket, &pilihanUser, &jmlhTiket);
+        TambahAntrean(Loket, User);
+        KondisiQueue(Loket);
         ThirdMenu(pilihanUser, propertiFilm, jmlhTiket);
         MenuAkhir(&User,propertiFilm,pilihanUser);
-        TambahAntrean(Loket, User);
-        Konfirmasi(anchor);
+        Konfirmasi(&anchor);
     }
     return 0;
 }

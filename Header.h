@@ -13,6 +13,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include "Time.c"
 
 #define jumlahLoket 3
 #define jumlahFilm 9
@@ -137,14 +138,14 @@ void initialisasiList(LinkedList list[]);
     FS: Sudah terbentuk loket untuk menampung antrian 
 */
 
-void DeleteNodeQueue(LinkedList Loket);
+void DeleteNodeQueue(LinkedList Loket[]);
 /* Menghapus node Pelanggan dalam Queue setelah melewati waktu tertentu*/
 /*
     IS: Node pelanggan pada Queue yang ditunjuk head belum dihapus
     FS: Node pelanggan pada Queue yang ditunjuk head dihapus, dan digantikan node setelahnya
 */
 
-void DeleteNodeQueue(LinkedList Loket);
+void Konfirmasi(char *Anchor);
 
-void Konfirmasi(char Anchor);
+void KondisiQueue(LinkedList Loket[]);
 #endif
